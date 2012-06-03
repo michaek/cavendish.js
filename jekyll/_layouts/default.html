@@ -19,6 +19,9 @@
   </style>
   <link rel="stylesheet" href="{{ page.relative_root }}/css/bootstrap-responsive.min.css">
   <link rel="stylesheet" href="{{ page.relative_root }}/css/style.css">
+  {% for style in page.styles %}
+    <link rel="stylesheet" href="{{ page.relative_root }}/css/{{ style }}.css">
+  {% endfor %}
 
   <script src="{{ page.relative_root }}/js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 </head>
@@ -38,9 +41,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  {% for post in site.posts %}
-                    <li><a href="{{ page.relative_root }}{{ post.url }}">{{ post.title }}</a></li>
-                  {% endfor %}
+                  {% include example_list.html %}
                 </ul>
               </li>
             </ul>
@@ -66,9 +67,9 @@
 <script src="{{ page.relative_root }}/js/libs/bootstrap/bootstrap.min.js"></script>
 <script src="{{ page.relative_root }}/js/cavendish.js"></script>
 
-{% if page.script %}
-  <script src="{{ page.relative_root }}/js/{{ page.script }}.js"></script>
-{% endif %}
+{% for script in page.scripts %}
+  <script src="{{ page.relative_root }}/js/{{ script }}.js"></script>
+{% endfor %}
 
 </body>
 </html>

@@ -12,6 +12,7 @@ class Cavendish
     @length = @slides.length
     @show
       .data('cavendish', this)
+      .addClass('cavendish-slideshow')
     @slides.each (index, slide) =>
       @show.trigger('cavendish-slide-init', [index, $(slide), this])
     @goto(0)

@@ -19,6 +19,7 @@
   </style>
   <link rel="stylesheet" href="./css/bootstrap-responsive.min.css">
   <link rel="stylesheet" href="./css/style.css">
+  
 
   <script src="./js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 </head>
@@ -39,8 +40,18 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   
-                    <li><a href="./examples/basic.html">Basic</a></li>
-                  
+  <li>
+    <a href="./examples/basic.html">Basic</a>
+  </li>
+
+  <li>
+    <a href="./examples/pager.html">Pager</a>
+  </li>
+
+  <li>
+    <a href="./examples/pan.html">Pan</a>
+  </li>
+
                 </ul>
               </li>
             </ul>
@@ -54,29 +65,35 @@
       <!-- Main hero unit for a primary marketing message or call to action -->
 <div class="hero-unit">
   <h1>Cavendish.js</h1>
-  <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-  <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+  <p>Cavendish is a jQuery plugin that's focused on helping you with your slides.</p>
+  <p><a href="./examples/basic.html" class="btn btn-primary btn-large">See it in action &raquo;</a></p>
 </div>
 
-<!-- Example row of columns -->
-<div class="row">
-  <div class="span4">
-    <h2>Heading</h2>
-     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-    <p><a class="btn" href="#">View details &raquo;</a></p>
-  </div>
-  <div class="span4">
-    <h2>Heading</h2>
-     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-    <p><a class="btn" href="#">View details &raquo;</a></p>
- </div>
-  <div class="span4">
-    <h2>Heading</h2>
-    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    <p><a class="btn" href="#">View details &raquo;</a></p>
-  </div>
-</div>
 
+<h1 id='about'>About</h1>
+
+<p>Cavendish is intended to be a very simple slide manager based on CSS transitions. Initializing Cavendish sets up an iterator for your slides, which applies classes to your slides based on their relationship to the current slide. Everything else is up to you!</p>
+
+<p>Cavendish doesn&#8217;t try to polyfill for old browsers, or to provide any extra interaction - it&#8217;s just meant to provide a platform for custom interaction by managing the state of your slides. I think you&#8217;ll find it refreshing!</p>
+
+<h1 id='usage'>Usage</h1>
+
+<p>Cavendish is written in Coffeescript, but it works like an ordinary jQuery plugin:</p>
+
+<pre><code>$(&#39;.slideshow&#39;).cavendish();</code></pre>
+
+<p>We can also send special commands.</p>
+
+<pre><code>$(&#39;.cavendish&#39;).cavendish(&#39;prev&#39;);</code></pre>
+
+<p>Or get a reference to the Cavendish object.</p>
+
+<pre><code>var cavendish = $(&#39;.cavendish&#39;).cavendish(&#39;cavendish&#39;);
+cavendish.prev();</code></pre>
+
+<h1 id='player'>Player</h1>
+
+<p>By default, Cavendish auto-advances between slides and pauses on hover. Cavendish can be used without auto-advance by passing <code>player: false</code> in the options.</p>
 
       <hr>
 

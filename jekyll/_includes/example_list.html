@@ -1,0 +1,5 @@
+{% for post in site.posts %}
+  <li{% if page.url == post.url %} class="active"{% endif %}>
+    <a href="{{ page.relative_root }}{{ post.url }}">{{ post.title }}</a>
+  </li>
+{% endfor %}

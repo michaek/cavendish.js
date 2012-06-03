@@ -21,7 +21,7 @@
       var _this = this;
       this.last = $();
       this.length = this.slides.length;
-      this.show.data('cavendish', this);
+      this.show.data('cavendish', this).addClass('cavendish-slideshow');
       this.slides.each(function(index, slide) {
         return _this.show.trigger('cavendish-slide-init', [index, $(slide), _this]);
       });

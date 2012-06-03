@@ -1,0 +1,16 @@
+/* line 3, ../../sass/examples/pan.sass */
+.cavendish {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
+}
+/* line 9, ../../sass/examples/pan.sass */
+.cavendish ol.slides {
+  -webkit-transition: top 0.5s, left 0.5s;
+  -moz-transition: top 0.5s, left 0.5s;
+  -ms-transition: top 0.5s, left 0.5s;
+  -o-transition: top 0.5s, left 0.5s;
+  transition: top 0.5s, left 0.5s;
+  overflow: visible;
+}
