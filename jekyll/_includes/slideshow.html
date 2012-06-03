@@ -1,0 +1,22 @@
+<div class="cavendish">
+  <div class="cavendish-pager">
+    <a class="active" href="#">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">4</a>
+  </div>
+  <ol>
+    <li>First</li>
+    <li>Second</li>
+    <li>Third</li>
+    <li>Fourth</li>
+  </ol>
+</div>
+
+<style type="text/css">
+  .cavendish ol, .cavendish li { position: relative; -webkit-transition: top 0.5s, left 0.5s; }
+  .cavendish li.cavendish-before { left: 0px; -webkit-transition: none; }
+  .cavendish li.cavendish-after { left: 200px; }
+  .cavendish li.cavendish-onstage { left: 100px; font-weight: bold; }
+  .cavendish-pager .active { font-weight: bold; }
+</style>
