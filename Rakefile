@@ -12,3 +12,10 @@ task :generate_docs => :build do
   `compass compile jekyll`
   `jekyll --no-auto jekyll docs`
 end
+
+task :pages do
+  `jekyll --no-auto jekyll gh-pages`
+  cd 'gh-pages'
+  `git commit -am "Deployed changes to docs."; git push origin gh-pages;`
+  cd '..'
+end
