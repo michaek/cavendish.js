@@ -1,0 +1,4 @@
+/* line 1, ../../sass/examples/pager.sass */
+.cavendish-pager .active {
+  font-weight: bold;
+}
