@@ -2,4 +2,4 @@ destination: ../docs
 permalink: none
 url: .
 auto: true
-exclude: [sass]
+exclude: [sass, config.rb]
