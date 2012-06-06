@@ -37,7 +37,7 @@
           <a class="brand" href="{{ page.relative_root }}/index.html">Cavendish.js</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="{{ page.relative_root }}/index.html">Home</a></li>
+              <li{% if page.url == '/index.html' || !page.url %} class="active"{% endif %}><a href="{{ page.relative_root }}/index.html">Home</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                 <ul class="dropdown-menu">
