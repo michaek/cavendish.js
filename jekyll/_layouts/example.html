@@ -7,5 +7,25 @@ layout: default
   {% include example_list.html %}
 </ul>
 
-
 {{ content }}
+
+<hr />
+
+{% if page.scripts %}
+  <p>
+  <span class="label">Scripts</span>
+  {% for script in page.scripts %}
+    <a href="{{ page.relative_root }}/js/{{ script }}.js">{{ script }}.js</a>
+  {% endfor %}
+  </p>
+{% endif %}
+
+{% if page.styles %}
+  <p>
+  <span class="label">Styles</span>
+  {% for style in page.styles %}
+    <a href="{{ page.relative_root }}/css/{{ style }}.css">{{ style }}.css</a>
+  {% endfor %}
+  </p>
+{% endif %}
+
