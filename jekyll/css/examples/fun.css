@@ -1,0 +1,82 @@
+.cavendish ol.slides {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  *zoom: 1;
+  position: relative;
+  width: 400px;
+  height: 300px;
+}
+.cavendish ol.slides li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  white-space: nowrap;
+}
+.cavendish ol.slides li {
+  *display: inline;
+}
+.cavendish ol.slides li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cavendish ol.slides li span {
+  -webkit-transition: top 0.5s, left 0.5s;
+  -moz-transition: top 0.5s, left 0.5s;
+  -ms-transition: top 0.5s, left 0.5s;
+  -o-transition: top 0.5s, left 0.5s;
+  transition: top 0.5s, left 0.5s;
+  left: -100%;
+  position: absolute;
+}
+.cavendish ol.slides .cavendish-before span {
+  top: 0;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+.cavendish ol.slides .cavendish-after span {
+  top: 0;
+  left: 100%;
+}
+.cavendish ol.slides .cavendish-onstage span {
+  font-weight: bold;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(1) span {
+  top: 25%;
+  left: 75%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(2) span {
+  top: 50%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(2) span.letter-o {
+  left: 25%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(2) span.letter-k {
+  left: 40%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(2) span.letter-a {
+  left: 55%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(2) span.letter-y {
+  left: 70%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(3) span {
+  top: 75%;
+  left: 25%;
+}
+.cavendish ol.slides .cavendish-onstage:nth-child(4) span {
+  top: 50%;
+  left: 50%;
+}

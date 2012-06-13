@@ -10,7 +10,7 @@ $(function(){
           return false
         })
     })
-    .cavendish()
+    .cavendish({player: false})
     .bind('cavendish-transition', function(e, c) {
       $pager.find('li')
         .removeClass('active')
