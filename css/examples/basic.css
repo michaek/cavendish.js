@@ -32,6 +32,7 @@
   top: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 .cavendish ol.slides li:nth-child(1) {
   background-color: #fff10d;
@@ -45,18 +46,16 @@
 .cavendish ol.slides li:nth-child(4) {
   background-color: #0883ff;
 }
-.cavendish ol.slides .cavendish-before {
+.cavendish ol.slides .cavendish-right {
   left: 100%;
-  -webkit-transition: none;
-  -moz-transition: none;
-  -ms-transition: none;
-  -o-transition: none;
-  transition: none;
 }
-.cavendish ol.slides .cavendish-after {
+.cavendish ol.slides .cavendish-left {
   left: -100%;
 }
 .cavendish ol.slides .cavendish-onstage {
   left: 0;
   font-weight: bold;
+}
+.cavendish ol.slides .cavendish-onstage, .cavendish ol.slides .cavendish-after {
+  z-index: 2;
 }
