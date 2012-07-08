@@ -8,13 +8,18 @@ class Cavendish
       @initialize()
 
   initialize: ->
+    @plugins = for plugin_name in @options.use_plugins
+      new plugins[plugin_name](this)
+
     @last = $()
     @length = @slides.length
     @show
       .data('cavendish', this)
       .addClass('cavendish-slideshow')
-    @slides.each (index, slide) =>
-      @show.trigger('cavendish-slide-init', [index, $(slide), this])
+
+    for plugin in @plugins
+      plugin.setup()
+
     @goto(0)
     @slides.not(@current).addClass('cavendish-before')
 
@@ -44,7 +49,9 @@ class Cavendish
         $(slide).addClass('cavendish-right')
     # Reset all but the last and current to their before state.
     @slides.not(@last).not(@current).addClass('cavendish-before')
-    @show.trigger('cavendish-transition', [this])
+
+    for plugin in @plugins
+      plugin.transition()
 
 # The Cavendish player class, which adds auto-advance options.
 class CavendishPlayer extends Cavendish
@@ -61,6 +68,38 @@ class CavendishPlayer extends Cavendish
     @show.removeClass('cavendish-playing')
     clearInterval(@timeout)
 
+
+class CavendishPlugin
+  constructor: (cavendish) ->
+    @cavendish = cavendish
+  setup: ->
+  transition: ->
+
+class CavendishEventsPlugin extends CavendishPlugin
+  setup: ->
+    @cavendish.show.trigger('cavendish-setup', [@cavendish])
+  transition: ->
+    @cavendish.show.trigger('cavendish-transition', [@cavendish])
+
+class CavendishPagerPlugin extends CavendishPlugin
+  setup: ->
+    @pager = $('.cavendish-pager')
+    @pager.find('a').each (index, el) =>
+      $(el).click => @cavendish.goto(index)
+
+  transition: ->
+    @pager.find('li')
+      .removeClass('active')
+      .eq(@cavendish.index)
+      .addClass('active')
+
+class CavendishPanPlugin extends CavendishPlugin
+  setup: ->
+    @background = $('.cavendish-background ol.slides')
+    @background.children().each (index, el) =>
+      $(el).css('left', index*100+'%')
+  transition: ->
+    @background.css('left', (@cavendish.index * -100)+'%')
 
 # Expose a jQuery method for our slideshow.
 $.fn.cavendish = (options) ->
@@ -93,3 +132,9 @@ defaults = $.fn.cavendish.defaults =
   player_pause: true
   slideSelector: '> ol > li'
   slideTimeout: 2000
+  use_plugins: []
+
+plugins = $.fn.cavendish.plugins =
+  events: CavendishEventsPlugin
+  pager: CavendishPagerPlugin
+  pan: CavendishPanPlugin
