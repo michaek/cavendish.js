@@ -1,11 +1,13 @@
 task :default => :generate_docs
 
+desc "build javascript"
 task :build do
   puts 'Building Javascript.'
   system "coffee -c cavendish.coffee"
   system "uglifyjs cavendish.js > cavendish.min.js"
 end
 
+desc "generate documentation site"
 task :generate_docs => :build do
   cp 'cavendish.js', 'jekyll/js'
   cp 'Readme.md', 'jekyll/_includes/readme.markdown'

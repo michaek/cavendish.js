@@ -31,14 +31,14 @@
       }).call(this);
       this.last = $();
       this.length = this.slides.length;
-      this.show.data('cavendish', this).addClass('cavendish-slideshow');
+      this.show.data('cavendish', this).addClass(this.options.class_names.show);
       _ref = this.plugins;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         plugin = _ref[_i];
         plugin.setup();
       }
       this.goto(0);
-      return this.slides.not(this.current).addClass('cavendish-before');
+      return this.slides.not(this.current).addClass(this.options.class_names.slide.before);
     };
 
     Cavendish.prototype.next = function() {
@@ -60,7 +60,7 @@
     };
 
     Cavendish.prototype.goto = function(index) {
-      var plugin, _i, _len, _ref, _results,
+      var classes, key, name, plugin, _i, _len, _ref, _results,
         _this = this;
       if (!(this.slides[index] != null)) {
         return;
@@ -70,17 +70,26 @@
         this.last = this.current;
       }
       this.current = this.slides.eq(this.index);
-      this.slides.removeClass('cavendish-onstage cavendish-before cavendish-after cavendish-left cavendish-right');
-      this.last.addClass('cavendish-after');
-      this.current.addClass('cavendish-onstage');
+      classes = this.options.class_names.slide;
+      this.slides.removeClass(((function() {
+        var _results;
+        _results = [];
+        for (key in classes) {
+          name = classes[key];
+          _results.push(name);
+        }
+        return _results;
+      })()).join(' '));
+      this.last.addClass(classes.after);
+      this.current.addClass(classes.on);
       this.slides.each(function(index, slide) {
         if (index < _this.index) {
-          return $(slide).addClass('cavendish-left');
+          return $(slide).addClass(classes.left);
         } else if (index > _this.index) {
-          return $(slide).addClass('cavendish-right');
+          return $(slide).addClass(classes.right);
         }
       });
-      this.slides.not(this.last).not(this.current).addClass('cavendish-before');
+      this.slides.not(this.last).not(this.current).addClass(classes.before);
       _ref = this.plugins;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -98,8 +107,9 @@
 
     __extends(CavendishPlayer, _super);
 
-    function CavendishPlayer() {
-      return CavendishPlayer.__super__.constructor.apply(this, arguments);
+    function CavendishPlayer(show, options) {
+      options = $.extend(true, {}, this.defaults, options);
+      CavendishPlayer.__super__.constructor.call(this, show, options);
     }
 
     CavendishPlayer.prototype.initialize = function() {
@@ -119,15 +129,24 @@
 
     CavendishPlayer.prototype.start = function() {
       var _this = this;
-      this.show.addClass('cavendish-playing');
+      this.show.addClass(this.options.class_names.playing);
       return this.timeout = setInterval((function() {
         return _this.next();
       }), this.options.slideTimeout);
     };
 
     CavendishPlayer.prototype.stop = function() {
-      this.show.removeClass('cavendish-playing');
+      this.show.removeClass(this.options.class_names.playing);
       return clearInterval(this.timeout);
+    };
+
+    CavendishPlayer.prototype.defaults = {
+      player_start: true,
+      player_pause: true,
+      slideTimeout: 2000,
+      class_names: {
+        playing: 'cavendish-playing'
+      }
     };
 
     return CavendishPlayer;
@@ -221,7 +240,7 @@
   $.fn.cavendish = function(options) {
     var cavendish;
     if (typeof options !== 'string') {
-      options = $.extend({}, defaults, options);
+      options = $.extend(true, {}, defaults, options);
       return this.each(function() {
         if (options.player) {
           return new CavendishPlayer($(this), options);
@@ -249,11 +268,18 @@
 
   defaults = $.fn.cavendish.defaults = {
     player: true,
-    player_start: true,
-    player_pause: true,
     slideSelector: '> ol > li',
-    slideTimeout: 2000,
-    use_plugins: []
+    use_plugins: [],
+    class_names: {
+      show: 'cavendish-slideshow',
+      slide: {
+        left: 'cavendish-left',
+        right: 'cavendish-right',
+        on: 'cavendish-onstage',
+        before: 'cavendish-before',
+        after: 'cavendish-after'
+      }
+    }
   };
 
   plugins = $.fn.cavendish.plugins = {

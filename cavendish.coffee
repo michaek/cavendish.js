@@ -15,13 +15,13 @@ class Cavendish
     @length = @slides.length
     @show
       .data('cavendish', this)
-      .addClass('cavendish-slideshow')
+      .addClass @options.class_names.show
 
     for plugin in @plugins
       plugin.setup()
 
-    @goto(0)
-    @slides.not(@current).addClass('cavendish-before')
+    @goto 0
+    @slides.not(@current).addClass @options.class_names.slide.before
 
   next: ->
     index = @index + 1
@@ -38,35 +38,47 @@ class Cavendish
     @index = index
     if @current? then @last = @current
     @current = @slides.eq(@index)
-    @slides.removeClass('cavendish-onstage cavendish-before cavendish-after cavendish-left cavendish-right')
-    @last.addClass('cavendish-after')
-    @current.addClass('cavendish-onstage')
+    classes = @options.class_names.slide
+    @slides.removeClass (name for key, name of classes).join(' ')
+    @last.addClass classes.after
+    @current.addClass classes.on
     # Add left and right classes.
     @slides.each (index, slide) =>
       if index < @index
-        $(slide).addClass('cavendish-left')
+        $(slide).addClass classes.left
       else if index > @index
-        $(slide).addClass('cavendish-right')
+        $(slide).addClass classes.right
     # Reset all but the last and current to their before state.
-    @slides.not(@last).not(@current).addClass('cavendish-before')
+    @slides.not(@last).not(@current).addClass classes.before
 
     for plugin in @plugins
       plugin.transition()
 
 # The Cavendish player class, which adds auto-advance options.
 class CavendishPlayer extends Cavendish
+  constructor: (show, options) ->
+    options = $.extend(true, {}, @defaults, options)
+    super show, options
+
   initialize: ->
     super
     if @options.player_pause then @show.hover (=> @stop()), (=> @start())
     if @options.player_start then @start()
 
   start: ->
-    @show.addClass('cavendish-playing')
+    @show.addClass(@options.class_names.playing)
     @timeout = setInterval (=> @next()), @options.slideTimeout
 
   stop: ->
-    @show.removeClass('cavendish-playing')
+    @show.removeClass(@options.class_names.playing)
     clearInterval(@timeout)
+
+  defaults:
+    player_start: true
+    player_pause: true
+    slideTimeout: 2000
+    class_names:
+      playing: 'cavendish-playing'
 
 
 class CavendishPlugin
@@ -105,7 +117,7 @@ class CavendishPanPlugin extends CavendishPlugin
 $.fn.cavendish = (options) ->
   unless typeof options == 'string'
     # Set up the slideshow.
-    options = $.extend({}, defaults, options)
+    options = $.extend(true, {}, defaults, options)
     return this.each ->
       if options.player
         new CavendishPlayer $(this), options
@@ -128,12 +140,18 @@ $.fn.cavendish = (options) ->
 # Expose jQuery defaults for our slideshow.
 defaults = $.fn.cavendish.defaults =
   player: true
-  player_start: true
-  player_pause: true
   slideSelector: '> ol > li'
-  slideTimeout: 2000
   use_plugins: []
+  class_names:
+    show:     'cavendish-slideshow'
+    slide:
+      left:   'cavendish-left'
+      right:  'cavendish-right'
+      on:     'cavendish-onstage'
+      before: 'cavendish-before'
+      after:  'cavendish-after'
 
+# Expose our plugins.
 plugins = $.fn.cavendish.plugins =
   events: CavendishEventsPlugin
   pager: CavendishPagerPlugin
