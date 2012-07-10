@@ -1,0 +1,48 @@
+@import "compass/css3/transition"
+@import "compass/typography/lists/inline-block-list"
+@import "compass/css3/opacity"
+@import "compass/typography/text/replacement"
+
+.cavendish
+  position: relative
+  width: 100%
+  height: 300px
+  overflow: hidden
+
+  ol.slides
+    +inline-block-list
+    width: 200px
+    height: 200px
+    background: #eee
+    position: absolute
+    top: 50px
+    left: 50px
+    z-index: 2
+    overflow: visible
+    color: #333
+
+    li
+      width: auto
+      height: auto
+      padding: 10px
+      background: none
+      font-size: 2em
+      position: absolute
+      top: 0
+      left: 0
+      +transition(0.25s)
+
+  .cavendish-before, .cavendish-after
+    +opacity(0)
+
+  .cavendish-onstage
+    +opacity(1)
+
+  .cavendish-pan
+    +transition(top 1s, left 1s)
+    position: absolute
+    z-index: 1
+
+    img
+      width: 135%
+      max-width: 135%

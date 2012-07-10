@@ -39,7 +39,7 @@ Connects a previous and next link to the prev() and next() methods on your caven
 
 ### Pan
 
-This is a slightly unusual feature, but it's one I use a lot so I included it! It takes an element within the cavendish parent element, and positions it absolutely based on the current slide index. This isn't very configurable now, but it could also be useful for a parallax effect.
+This is a slightly unusual feature, but it's one I use a lot so I included it! It takes an element within the cavendish parent element, and positions it absolutely based on the current slide index. This can also be used as a parallax effect, if you set the panFactor option to a smaller number - it's 1 by default, which represents the entire width of the slideshow.
 
 ### Events
 

@@ -19,8 +19,8 @@ class Cavendish
       .addClass @options.class_names.show
 
     for plugin in @plugins
+      @options = $.extend(true, {}, plugin.defaults(), @options)
       plugin.setup()
-      @options = $.extend(true, {}, plugin.defaults, @options)
 
     @goto 0
     @slides.not(@current).addClass @options.class_names.slide.before

@@ -5,7 +5,7 @@ class CavendishPlugin
     @cavendish = cavendish
   setup: ->
   transition: ->
-  defaults:
+  defaults: ->
     class_names:
       active:   'active'
       disabled: 'disabled'
@@ -18,17 +18,23 @@ class CavendishEventsPlugin extends CavendishPlugin
 
 class CavendishPagerPlugin extends CavendishPlugin
   setup: ->
-    @pager = $('.cavendish-pager')
-    @pager.find('a').each (index, el) =>
+    @pager = $(@cavendish.options.pagerSelector, @cavendish.show)
+    @pager.find(@cavendish.options.pagerItemSelector).each (index, el) =>
       $(el).click =>
         @cavendish.goto(index)
         false
 
   transition: ->
-    @pager.find('li')
+    @pager.find(@cavendish.options.pagerItemSelector)
       .removeClass(@cavendish.options.class_names.active)
       .eq(@cavendish.index)
       .addClass(@cavendish.options.class_names.active)
+
+  defaults: ->
+    defaults =
+      pagerSelector:      '.cavendish-pager'
+      pagerItemSelector:  'li'
+    opts = $.extend {}, super, defaults
 
 class CavendishArrowsPlugin extends CavendishPlugin
   setup: ->
@@ -47,11 +53,19 @@ class CavendishArrowsPlugin extends CavendishPlugin
 
 class CavendishPanPlugin extends CavendishPlugin
   setup: ->
-    @background = $('.cavendish-background ol.slides')
-    @background.children().each (index, el) =>
+    @background = @cavendish.show.find @cavendish.options.panSelector
+    @background.find().each (index, el) =>
       $(el).css('left', index*100+'%')
+
   transition: ->
-    @background.css('left', (@cavendish.index * -100)+'%')
+    @background.css('left', (@cavendish.index * -100 * @cavendish.options.panFactor)+'%')
+
+  defaults: ->
+    defaults =
+      panFactor:        1
+      panSelector:      '.cavendish-pan'
+      panChildSelector: '> li'
+    opts = $.extend {}, super, defaults
 
 # Expose our plugins.
 $.fn.cavendish.plugins =

@@ -16,11 +16,13 @@
 
     CavendishPlugin.prototype.transition = function() {};
 
-    CavendishPlugin.prototype.defaults = {
-      class_names: {
-        active: 'active',
-        disabled: 'disabled'
-      }
+    CavendishPlugin.prototype.defaults = function() {
+      return {
+        class_names: {
+          active: 'active',
+          disabled: 'disabled'
+        }
+      };
     };
 
     return CavendishPlugin;
@@ -57,8 +59,8 @@
 
     CavendishPagerPlugin.prototype.setup = function() {
       var _this = this;
-      this.pager = $('.cavendish-pager');
-      return this.pager.find('a').each(function(index, el) {
+      this.pager = $(this.cavendish.options.pagerSelector, this.cavendish.show);
+      return this.pager.find(this.cavendish.options.pagerItemSelector).each(function(index, el) {
         return $(el).click(function() {
           _this.cavendish.goto(index);
           return false;
@@ -67,7 +69,16 @@
     };
 
     CavendishPagerPlugin.prototype.transition = function() {
-      return this.pager.find('li').removeClass(this.cavendish.options.class_names.active).eq(this.cavendish.index).addClass(this.cavendish.options.class_names.active);
+      return this.pager.find(this.cavendish.options.pagerItemSelector).removeClass(this.cavendish.options.class_names.active).eq(this.cavendish.index).addClass(this.cavendish.options.class_names.active);
+    };
+
+    CavendishPagerPlugin.prototype.defaults = function() {
+      var defaults, opts;
+      defaults = {
+        pagerSelector: '.cavendish-pager',
+        pagerItemSelector: 'li'
+      };
+      return opts = $.extend({}, CavendishPagerPlugin.__super__.defaults.apply(this, arguments), defaults);
     };
 
     return CavendishPagerPlugin;
@@ -117,14 +128,24 @@
 
     CavendishPanPlugin.prototype.setup = function() {
       var _this = this;
-      this.background = $('.cavendish-background ol.slides');
-      return this.background.children().each(function(index, el) {
+      this.background = this.cavendish.show.find(this.cavendish.options.panSelector);
+      return this.background.find().each(function(index, el) {
         return $(el).css('left', index * 100 + '%');
       });
     };
 
     CavendishPanPlugin.prototype.transition = function() {
-      return this.background.css('left', (this.cavendish.index * -100) + '%');
+      return this.background.css('left', (this.cavendish.index * -100 * this.cavendish.options.panFactor) + '%');
+    };
+
+    CavendishPanPlugin.prototype.defaults = function() {
+      var defaults, opts;
+      defaults = {
+        panFactor: 1,
+        panSelector: '.cavendish-pan',
+        panChildSelector: '> li'
+      };
+      return opts = $.extend({}, CavendishPanPlugin.__super__.defaults.apply(this, arguments), defaults);
     };
 
     return CavendishPanPlugin;

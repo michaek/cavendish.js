@@ -2,7 +2,8 @@ $(function(){
 
   $('.cavendish').cavendish({
     slideSelector: '.cavendish-navigation > ol > li',
-    use_plugins: ['pager', 'pan']
+    use_plugins: ['pager', 'pan'],
+    panSelector: '.cavendish-background ol.slides'
   });
 
 })

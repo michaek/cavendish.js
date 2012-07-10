@@ -36,8 +36,8 @@
       _ref = this.plugins;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         plugin = _ref[_i];
+        this.options = $.extend(true, {}, plugin.defaults(), this.options);
         plugin.setup();
-        this.options = $.extend(true, {}, plugin.defaults, this.options);
       }
       this.goto(0);
       return this.slides.not(this.current).addClass(this.options.class_names.slide.before);
