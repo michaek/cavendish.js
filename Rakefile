@@ -3,13 +3,19 @@ task :default => :generate_docs
 desc "build javascript"
 task :build do
   puts 'Building Javascript.'
-  system "coffee -c cavendish.coffee"
-  system "uglifyjs cavendish.js > cavendish.min.js"
+  to_concat = []
+  ['cavendish', 'cavendish.plugins'].each do |file|
+    system "coffee -c %s.coffee" % file
+    system "uglifyjs %s.js > %s.min.js" % [file, file]
+    to_concat << "%s.js" % file
+  end
+  system "cat %s > cavendish.all.js" % to_concat.join(' ')
+  system "uglifyjs cavendish.all.js > cavendish.all.min.js"
 end
 
 desc "generate documentation site"
 task :generate_docs => :build do
-  cp 'cavendish.js', 'jekyll/js'
+  cp 'cavendish.all.min.js', 'jekyll/js'
   cp 'Readme.md', 'jekyll/_includes/readme.markdown'
   system "compass compile jekyll"
   system "jekyll --no-auto jekyll docs"
