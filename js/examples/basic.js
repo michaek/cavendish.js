@@ -1,3 +1,3 @@
 $(function(){
-  $('.cavendish').cavendish();
+  $('.cavendish').cavendish({class_names: {playing: 'cavendish-animating'}});
 })
