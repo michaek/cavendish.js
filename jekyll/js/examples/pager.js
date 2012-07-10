@@ -1,3 +1,3 @@
 $(function(){
-  $('.cavendish').cavendish({player: false, use_plugins: ['pager']})
+  $('.cavendish').cavendish({player: false, loop: false, use_plugins: ['pager', 'arrows']})
 })

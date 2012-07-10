@@ -19,18 +19,19 @@ class Cavendish
 
     for plugin in @plugins
       plugin.setup()
+      @options = $.extend(true, {}, plugin.defaults, @options)
 
     @goto 0
     @slides.not(@current).addClass @options.class_names.slide.before
 
   next: ->
     index = @index + 1
-    if index >= @length then index = 0
+    if index >= @length && @options.loop then index = 0
     @goto(index)
 
   prev: ->
     index = @index - 1
-    if index < 0 then index = @slides.length - 1
+    if index < 0 && @options.loop then index = @length - 1
     @goto(index)
 
   goto: (index) ->
@@ -86,6 +87,10 @@ class CavendishPlugin
     @cavendish = cavendish
   setup: ->
   transition: ->
+  defaults:
+    class_names:
+      active:   'active'
+      disabled: 'disabled'
 
 class CavendishEventsPlugin extends CavendishPlugin
   setup: ->
@@ -97,13 +102,30 @@ class CavendishPagerPlugin extends CavendishPlugin
   setup: ->
     @pager = $('.cavendish-pager')
     @pager.find('a').each (index, el) =>
-      $(el).click => @cavendish.goto(index)
+      $(el).click =>
+        @cavendish.goto(index)
+        false
 
   transition: ->
     @pager.find('li')
-      .removeClass('active')
+      .removeClass(@cavendish.options.class_names.active)
       .eq(@cavendish.index)
-      .addClass('active')
+      .addClass(@cavendish.options.class_names.active)
+
+class CavendishArrowsPlugin extends CavendishPlugin
+  setup: ->
+    @next = $('.cavendish-next').click =>
+      @cavendish.next()
+      false
+    @prev = $('.cavendish-prev').click => 
+      @cavendish.prev()
+      false
+
+  transition: ->
+    unless @cavendish.options.loop
+      last = @cavendish.index + 1 == @cavendish.length
+      @next.toggleClass @cavendish.options.class_names.disabled, last
+      @prev.toggleClass @cavendish.options.class_names.disabled, @cavendish.index == 0
 
 class CavendishPanPlugin extends CavendishPlugin
   setup: ->
@@ -140,6 +162,7 @@ $.fn.cavendish = (options) ->
 # Expose jQuery defaults for our slideshow.
 defaults = $.fn.cavendish.defaults =
   player: true
+  loop: true
   slideSelector: '> ol > li'
   use_plugins: []
   class_names:
@@ -153,6 +176,7 @@ defaults = $.fn.cavendish.defaults =
 
 # Expose our plugins.
 plugins = $.fn.cavendish.plugins =
-  events: CavendishEventsPlugin
-  pager: CavendishPagerPlugin
-  pan: CavendishPanPlugin
+  events:   CavendishEventsPlugin
+  pager:    CavendishPagerPlugin
+  arrows:   CavendishArrowsPlugin
+  pan:      CavendishPanPlugin
