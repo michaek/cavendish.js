@@ -19,15 +19,22 @@ Or get a reference to the Cavendish object.
     var cavendish = $('.cavendish').cavendish('cavendish');
     cavendish.prev();
 
-# Player
-
-By default, Cavendish auto-advances between slides and pauses on hover. Cavendish can be used without auto-advance by passing `player: false` in the options.
-
 # Plugins
 
 Cavendish provides a few interaction plugins that you can choose to use - none are enabled by default. You can enable them with the use_plugins option:
 
-    $('.cavendish').cavendish({use_plugins: ['pager']});
+    $('.cavendish').cavendish({use_plugins: ['player']});
+
+### Player
+
+Auto-advances between slides and pauses on hover. You can call start and stop methods on the plugin from the Cavendish object. It's a little verbose, currently:
+
+    var cavendish = $('.cavendish').cavendish('cavendish');
+    cavendish.plugins['player'].start();
+
+In the initial version of Cavendish, the player was part of the core library and enabled by default. Now it's just another plugin, and you've got to include it in your cavendish() initialization, or override the defaults by setting:
+
+    $.fn.cavendish.defaults['use_plugins'] = ['player']
 
 ### Pager
 

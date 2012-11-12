@@ -1,16 +1,16 @@
 $ = jQuery
 
-# The basic Cavendish slides class.
 class Cavendish
+  version: '0.0.1'
+
   constructor: (@show, @options) ->
     @slides = @show.find @options.slideSelector
     if @slides.length > 0
       @initialize()
 
   initialize: ->
-    plugins = $.fn.cavendish.plugins
-    @plugins = for plugin_name in @options.use_plugins
-      new plugins[plugin_name](this)
+    @plugins = $.map @options.use_plugins, (name) =>
+      new $.fn.cavendish.plugins[name](this)
 
     @last = $()
     @length = @slides.length
@@ -18,9 +18,7 @@ class Cavendish
       .data('cavendish', this)
       .addClass @options.class_names.show
 
-    for plugin in @plugins
-      @options = $.extend(true, {}, plugin.defaults(), @options)
-      plugin.setup()
+    $.each @plugins, -> @setup()
 
     @goto 0
     @slides.not(@current).addClass @options.class_names.slide.before
@@ -53,34 +51,7 @@ class Cavendish
     # Reset all but the last and current to their before state.
     @slides.not(@last).not(@current).addClass classes.before
 
-    for plugin in @plugins
-      plugin.transition()
-
-# The Cavendish player class, which adds auto-advance options.
-class CavendishPlayer extends Cavendish
-  constructor: (show, options) ->
-    options = $.extend(true, {}, @defaults, options)
-    super show, options
-
-  initialize: ->
-    super
-    if @options.player_pause then @show.hover (=> @stop()), (=> @start())
-    if @options.player_start then @start()
-
-  start: ->
-    @show.addClass(@options.class_names.playing)
-    @timeout = setInterval (=> @next()), @options.slideTimeout
-
-  stop: ->
-    @show.removeClass(@options.class_names.playing)
-    clearInterval(@timeout)
-
-  defaults:
-    player_start: true
-    player_pause: true
-    slideTimeout: 2000
-    class_names:
-      playing: 'cavendish-playing'
+    $.each @plugins, -> @transition()
 
 # Expose a jQuery method for our slideshow.
 $.fn.cavendish = (options) ->
@@ -88,10 +59,7 @@ $.fn.cavendish = (options) ->
     # Set up the slideshow.
     options = $.extend(true, {}, defaults, options)
     return this.each ->
-      if options.player
-        new CavendishPlayer $(this), options
-      else
-        new Cavendish $(this), options
+      new Cavendish $(this), options
   else 
     cavendish = $(this).data('cavendish')
     if cavendish?
@@ -108,7 +76,6 @@ $.fn.cavendish = (options) ->
 
 # Expose jQuery defaults for our slideshow.
 defaults = $.fn.cavendish.defaults =
-  player: true
   loop: true
   slideSelector: '> ol > li'
   use_plugins: []

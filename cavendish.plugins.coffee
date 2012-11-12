@@ -3,12 +3,36 @@ $ = jQuery
 class CavendishPlugin
   constructor: (cavendish) ->
     @cavendish = cavendish
+    @options = @cavendish.options = $.extend true, {}, @defaults(), @cavendish.options
   setup: ->
   transition: ->
+  extensions: -> []
   defaults: ->
     class_names:
       active:   'active'
       disabled: 'disabled'
+
+class CavendishPlayerPlugin extends CavendishPlugin
+  setup: ->
+    @show = @cavendish.show
+    if @options.player_pause then @show.hover (=> @stop()), (=> @start())
+    if @options.player_start then @start()
+
+  start: ->
+    @show.addClass(@options.class_names.playing)
+    @timeout = setInterval (=> @cavendish.next()), @options.slideTimeout
+
+  stop: ->
+    @show.removeClass(@options.class_names.playing)
+    clearInterval(@timeout)
+
+  defaults: =>
+    $.extend true, {}, super,
+      player_start: true
+      player_pause: true
+      slideTimeout: 2000
+      class_names:
+        playing: 'cavendish-playing'
 
 class CavendishEventsPlugin extends CavendishPlugin
   setup: ->
@@ -31,10 +55,9 @@ class CavendishPagerPlugin extends CavendishPlugin
       .addClass(@cavendish.options.class_names.active)
 
   defaults: ->
-    defaults =
+    $.extend true, {}, super,
       pagerSelector:      '.cavendish-pager'
       pagerItemSelector:  'li'
-    opts = $.extend {}, super, defaults
 
 class CavendishArrowsPlugin extends CavendishPlugin
   setup: ->
@@ -54,21 +77,21 @@ class CavendishArrowsPlugin extends CavendishPlugin
 class CavendishPanPlugin extends CavendishPlugin
   setup: ->
     @background = @cavendish.show.find @cavendish.options.panSelector
-    @background.find().each (index, el) =>
+    @background.find(@cavendish.options.panChildSelector).each (index, el) =>
       $(el).css('left', index*100+'%')
 
   transition: ->
     @background.css('left', (@cavendish.index * -100 * @cavendish.options.panFactor)+'%')
 
   defaults: ->
-    defaults =
+    $.extend true, {}, super,
       panFactor:        1
       panSelector:      '.cavendish-pan'
       panChildSelector: '> li'
-    opts = $.extend {}, super, defaults
 
 # Expose our plugins.
 $.fn.cavendish.plugins =
+  player:   CavendishPlayerPlugin
   events:   CavendishEventsPlugin
   pager:    CavendishPagerPlugin
   arrows:   CavendishArrowsPlugin

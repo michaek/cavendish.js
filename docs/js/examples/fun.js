@@ -1,3 +1,5 @@
 $(function(){
-  $('.cavendish').cavendish();
+  $('.cavendish').cavendish({
+    use_plugins: ['player'],
+  });
 })
