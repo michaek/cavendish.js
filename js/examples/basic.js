@@ -1,3 +1,6 @@
 $(function(){
-  $('.cavendish').cavendish({class_names: {playing: 'cavendish-animating'}});
+  $('.cavendish').cavendish({
+    use_plugins: ['player'],
+    class_names: {playing: 'cavendish-animating'},
+  });
 })
