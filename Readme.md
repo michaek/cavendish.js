@@ -4,6 +4,8 @@ Cavendish is intended to be a very simple slide manager based on CSS transitions
 
 Cavendish doesn't try to polyfill for old browsers, or to provide any extra interaction - it's just meant to provide a platform for custom interaction by managing the state of your slides. I think you'll find it refreshing!
 
+I noticed recently that this approach is very similar to the approach of [Bootstrap's Carousel](http://twitter.github.io/bootstrap/javascript.html#carousel). If you're already using Bootstrap, it probably makes sense to use that instead.
+
 # Usage
 
 Cavendish is written in Coffeescript, but it works like an ordinary jQuery plugin:
