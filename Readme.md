@@ -1,4 +1,4 @@
-# About
+# Cavendish.js
 
 Cavendish is intended to be a very simple slide manager based on CSS transitions. Initializing Cavendish sets up an iterator for your slides, which applies classes to your slides based on their relationship to the current slide. Everything else is up to you!
 

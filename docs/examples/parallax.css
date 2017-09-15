@@ -1,0 +1,51 @@
+.cavendish-parallax {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+.cavendish-parallax ol.slides {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  background: #eeeeee;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 2;
+  overflow: visible;
+  color: #333333;
+}
+.cavendish-parallax ol.slides li {
+  list-style: none;
+  margin-left: 0;
+  display: inline-block;
+  white-space: nowrap;
+}
+.cavendish-parallax ol.slides li {
+  width: auto;
+  height: auto;
+  padding: 10px;
+  background: none;
+  font-size: 2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.25s;
+}
+.cavendish-parallax .cavendish-before, .cavendish-parallax .cavendish-after {
+  opacity: 0;
+}
+.cavendish-parallax .cavendish-onstage {
+  opacity: 1;
+}
+.cavendish-parallax .cavendish-parallax-image {
+  transition: transform 1s;
+}
+.cavendish-parallax .cavendish-parallax-image img {
+  width: 135%;
+  max-width: 135%;
+}

@@ -1,0 +1,66 @@
+.cavendish-fun ol.slides {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+.cavendish-fun ol.slides li {
+  list-style: none;
+  margin-left: 0;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.cavendish-fun ol.slides li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cavendish-fun ol.slides li span {
+  transition: top 0.5s, left 0.5s;
+  left: -100%;
+  position: absolute;
+}
+.cavendish-fun ol.slides .cavendish-before span {
+  top: 0;
+  transition: none;
+}
+.cavendish-fun ol.slides .cavendish-after span {
+  top: 0;
+  left: 100%;
+}
+.cavendish-fun ol.slides .cavendish-onstage span {
+  font-weight: bold;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(1) span {
+  top: 25%;
+  left: 75%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(2) span {
+  top: 50%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(2) span.letter-o {
+  left: 25%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(2) span.letter-k {
+  left: 40%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(2) span.letter-a {
+  left: 55%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(2) span.letter-y {
+  left: 70%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(3) span {
+  top: 75%;
+  left: 25%;
+}
+.cavendish-fun ol.slides .cavendish-onstage:nth-child(4) span {
+  top: 50%;
+  left: 50%;
+}

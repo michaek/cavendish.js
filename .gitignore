@@ -1,4 +1,4 @@
 .DS_Store
-.sass-cache
 gh-pages
-.rvmrc
+node_modules
+_docpress

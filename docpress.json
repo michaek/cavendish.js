@@ -1,0 +1,6 @@
+{
+  "github": "michaek/cavendish.js",
+  "scripts": [
+    "cavendish.min.js"
+  ]
+}

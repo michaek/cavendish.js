@@ -1,5 +1,0 @@
-destination: ../docs
-permalink: none
-url: .
-auto: true
-exclude: [sass, config.rb]
